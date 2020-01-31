@@ -83,9 +83,9 @@ class MemLimit(ExplorationTechnique):
 
     def step(self, simgr, stash='active', **kwargs):
         if self._trigger is None:
-            return simgr.step(stash=stash, kwargs)
+            return simgr.step(stash=stash, **kwargs)
         for state in simgr.stashes[stash]:
             if not state.globals[CLAIM_TRIGGERED] and self._trigger(state):
                 state.globals[NO_OOM_MEMSIZE] -= self._claim_amount
                 state.globals[CLAIM_TRIGGERED] = True
-        return simgr.step(stash=stash, kwargs)
+        return simgr.step(stash=stash, **kwargs)

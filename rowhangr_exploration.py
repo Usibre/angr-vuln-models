@@ -49,7 +49,7 @@ class RowHangr(ExplorationTechnique):
 
     def step(self, simgr, stash='active', **kwargs):
         if self._triggered:
-            return simgr.step(stash=stash, kwargs)
+            return simgr.step(stash=stash, **kwargs)
         if self._trigger_cond is not None:
             for state in list(simgr.stashes[stash]):
                 if not state.globals[ROWHAMMER_TRIGGERED] and self._trigger_cond(state):
@@ -62,7 +62,7 @@ class RowHangr(ExplorationTechnique):
                 self.trigger_rowhammer(simgr, stash=stash, **kwargs)
                 self._s.add(self._no_bb != 0) # removing this case for overflow issues
             self._no_bb = self._no_bb - 1
-        return simgr.step(stash=stash)
+        return simgr.step(stash=stash, **kwargs)
 
     def trigger_rowhammer(self, simgr, stash='active', **kwargs):
         l.debug('Triggering rowhammer!')
